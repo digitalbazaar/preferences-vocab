@@ -1,0 +1,117 @@
+     <p>
+This section provides examples of the use of this vocabulary, showing how
+verified preferences can be expressed as Verifiable Credentials issued by
+trusted third parties.
+      </p>
+
+      <p>
+The first example shows a <code>VerifiedPreferencesCredential</code> issued
+by an email provider, attesting that the email address belongs to the subject.
+      </p>
+
+      <pre class="example nohighlight vc"
+        title="A VerifiedPreferencesCredential with a verified email address"
+        data-vc-vm='https://emailprovider.example/issuers/123'
+        data-vc-tabs="cbor-ld qr">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://w3id.org/preferences/v1"
+  ],
+  "type": ["VerifiableCredential", "VerifiedPreferencesCredential"],
+  "issuer": "https://emailprovider.example/issuer",
+  "validFrom": "2025-03-15T10:22:00Z",
+  "credentialSubject": {
+    "email": "jane.doe@example.com"
+  }
+}
+      </pre>
+
+      <p>
+The next example shows a <code>VerifiedPreferencesCredential</code> issued
+by a telephone carrier, attesting that the phone number belongs to the subject.
+      </p>
+
+      <pre class="example nohighlight vc"
+        title="A VerifiedPreferencesCredential with a verified phone number"
+        data-vc-vm='https://carrier.example/issuers/123'
+        data-vc-tabs="cbor-ld qr">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://w3id.org/preferences/v1"
+  ],
+  "type": ["VerifiableCredential", "VerifiedPreferencesCredential"],
+  "issuer": "https://carrier.example/issuer",
+  "validFrom": "2025-04-01T08:00:00Z",
+  "credentialSubject": {
+    "telephone": "+12125550101"
+  }
+}
+      </pre>
+
+      <p>
+The next example shows a <code>VerifiedPreferencesCredential</code> issued
+by a postal authority, attesting that the mailing address is a valid delivery
+point for the subject.
+      </p>
+
+      <pre class="example nohighlight vc"
+        title="A VerifiedPreferencesCredential with a verified mailing address"
+        data-vc-vm='https://postalauthority.example/issuers/123'
+        data-vc-tabs="cbor-ld qr">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://w3id.org/preferences/v1"
+  ],
+  "type": ["VerifiableCredential", "VerifiedPreferencesCredential"],
+  "issuer": "https://postalauthority.example/issuer",
+  "validFrom": "2025-02-20T09:00:00Z",
+  "credentialSubject": {
+    "address": {
+      "type": "PostalAddress",
+      "streetAddress": "123 Main St",
+      "addressLocality": "Springfield",
+      "addressRegion": "IL",
+      "postalCode": "62701",
+      "addressCountry": "US"
+    }
+  }
+}
+      </pre>
+
+      <p>
+The final example shows a <code>VerifiedPreferencesCredential</code> issued
+by an assistive technology provider, attesting the subject's accessibility
+preferences.
+      </p>
+
+      <pre class="example nohighlight vc"
+        title="A VerifiedPreferencesCredential with verified accessibility preferences"
+        data-vc-vm='https://atprovider.example/issuers/123'
+        data-vc-tabs="cbor-ld qr">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://w3id.org/preferences/v1"
+  ],
+  "type": ["VerifiableCredential", "VerifiedPreferencesCredential"],
+  "issuer": "https://atprovider.example/issuer",
+  "validFrom": "2025-05-01T00:00:00Z",
+  "credentialSubject": {
+    "accessibilityPreferences": {
+      "type": "AccessibilityPreferences",
+      "liveCaptions": true,
+      "realTimeText": false,
+      "voiceControl": true,
+      "fontSize": "20px",
+      "fontFamily": "OpenDyslexic, sans-serif",
+      "highContrast": true,
+      "colorFilter": "None",
+      "darkMode": true,
+      "motionPreference": "ReducedMotion"
+    }
+  }
+}
+      </pre>
