@@ -1,0 +1,525 @@
+vocab:
+  id: pref
+  value: https://w3id.org/preferences#
+  context: https://w3id.org/preferences/v1rc1
+
+ontology:
+  - property: dc:title
+    value: Individual Preferences Vocabulary
+  - property: dc:abstract
+    value: >-
+      The Individual Preferences Vocabulary is designed to express an
+      individual's preferences, including information verified by 3rd parties.
+      It covers verified information such as email address, phone number,
+      and mailing address, as well as self-attested accessibility preferences
+      including font size, live captions, voice controls, high contrast, color
+      filters, font size, and dark mode. This vocabulary enables systems to
+      communicate and honor both self-asserted and third-party-verified
+      preferences in a consistent and interoperable way.
+  - property: dc:description
+    value: >-
+      <div>
+
+      <p>The Individual Preferences Vocabulary provides a structured framework
+      for expressing a person's contact details and accessibility needs. As
+      digital services become more pervasive, there is a growing demand for
+      portable, verifiable preference data that individuals can share selectively
+      across platforms — without re-entering the same information on every
+      website or application they use.</p>
+
+      <p>Contact preferences in this vocabulary fall into two categories: those
+      that are self-asserted (an individual states their own email address) and
+      those that are verified by a trusted third party (an email provider or
+      phone carrier attests that the address or number belongs to the
+      individual). Verified preferences carry stronger assurance and can be used
+      by relying parties as a substitute for their own verification flows.</p>
+
+      <p>Accessibility preferences capture the display and interaction settings
+      that help individuals with visual, auditory, motor, or cognitive
+      differences interact with digital interfaces. Expressing these preferences
+      in a portable vocabulary lets a person carry their settings from one
+      application to another, reducing the friction of configuring each service
+      independently and increasing the likelihood that their needs will be
+      honored from the first interaction.</p>
+
+      <p>Several market verticals stand to gain from this vocabulary. Government
+      portals, healthcare patient portals, e-commerce platforms, and enterprise
+      software can all consume a individual's preferences credential to
+      pre-populate contact forms, activate appropriate UI themes, and enable
+      assistive technologies — reducing both onboarding friction and
+      accessibility compliance effort.</p>
+
+      <p>To implement this vocabulary successfully, systems should respect
+      individual-controlled disclosure: an individual must be able to share only
+      a subset of their preferences with any given relying party.
+      Privacy-by-design principles, combined with selective-disclosure
+      credential formats, make this possible when the vocabulary is used inside
+      a verifiable credential.</p>
+
+      </div>
+
+prefix:
+  - id: pref
+    value: https://w3id.org/preferences#
+  - id: schema
+    value: https://schema.org/
+  - id: sec
+    value: https://w3id.org/security#
+  - id: vc
+    value: https://www.w3.org/2018/credentials#
+
+property:
+  - comment: >-
+      The individual's preferred email address. When used in a verified context
+      (i.e., as a claim inside a <code>VerifiedPreferencesCredential</code>), the
+      issuer attests that the address was confirmed to belong to the subject at
+      the time of issuance.
+    domain: PreferencesCredential
+    id: schema:email
+    label: Email Address
+
+  - comment: >-
+      The individual's preferred phone number, expressed in E.164 format (e.g.,
+      <code>+12125551234</code>). When used inside a
+      <code>VerifiedPreferencesCredential</code>, the issuer attests that the number
+      was confirmed to belong to the subject at the time of issuance.
+    domain: PreferencesCredential
+    id: schema:telephone
+    label: Phone Number
+
+  - comment: >-
+      The individual's preferred mailing address. When used inside a
+      <code>VerifiedPreferencesCredential</code>, the issuer attests that the
+      address was confirmed as a valid delivery point for the subject at the
+      time of issuance.
+    domain: PreferencesCredential
+    id: schema:address
+    label: Mailing Address
+
+
+  - comment: >-
+      Indicates whether the individual prefers live captions on audio and video
+      content. Live captions display a real-time transcription of spoken words
+      and other audio events. When set to <code>true</code>, applications should
+      enable captions by default wherever technically possible.
+    domain: AccessibilityPreferences
+    id: liveCaptions
+    label: Live Captions
+    range: xsd:boolean
+
+  - comment: >-
+      Indicates whether the individual prefers real-time text (RTT) for voice
+      calls and communication sessions. RTT transmits text character-by-character
+      as it is typed, enabling communication for individuals who are deaf, hard
+      of hearing, or have speech disabilities. When set to <code>true</code>,
+      applications should enable RTT in place of or alongside voice where
+      supported.
+    domain: AccessibilityPreferences
+    id: realTimeText
+    label: Real-Time Text
+    range: xsd:boolean
+
+  - comment: >-
+      Indicates whether the individual prefers to interact with the interface
+      using voice control rather than (or in addition to) a keyboard and
+      pointing device. When set to <code>true</code>, applications should
+      activate or prompt for voice-control-friendly UI patterns, such as visible
+      labels on all interactive elements.
+    domain: AccessibilityPreferences
+    id: voiceControl
+    label: Voice Control
+    range: xsd:boolean
+
+  - comment: >-
+      The individual's preferred base font size, expressed in CSS-compatible
+      units (e.g., <code>"18px"</code>, <code>"1.25rem"</code>). Applications
+      should use this value as the root font size when rendering content for the
+      individual. When combined with <code>fontFamily</code>, it allows precise
+      typographic customization.
+    domain: AccessibilityPreferences
+    id: fontSize
+    label: Font Size
+    range: xsd:string
+
+  - comment: >-
+      The individual's preferred typeface. Values should be a valid CSS
+      font-family string (e.g., <code>"OpenDyslexic"</code>,
+      <code>"Arial, sans-serif"</code>). Certain fonts are specifically
+      designed to improve readability for individuals with dyslexia or low
+      vision.
+    domain: AccessibilityPreferences
+    id: fontFamily
+    label: Font Family
+    range: xsd:string
+
+  - comment: >-
+      Indicates whether the individual prefers a high-contrast rendering mode.
+      When set to <code>true</code>, applications should maximize the luminance
+      contrast ratio between foreground text and background elements, targeting
+      at least the WCAG 2.1 AAA contrast threshold (7:1) where possible.
+    domain: AccessibilityPreferences
+    id: highContrast
+    label: High Contrast
+    range: xsd:boolean
+
+  - comment: >-
+      The color filter the individual prefers to apply to the display.
+      Acceptable values are defined by the <code>ColorFilter</code> class:
+      <code>Grayscale</code>, <code>Inverted</code>,
+      <code>GrayscaleInverted</code>, <code>Deuteranopia</code>,
+      <code>Protanopia</code>, and <code>Tritanopia</code>. A value of
+      <code>None</code> indicates no filter should be applied. Applications
+      should honor this preference by applying the corresponding CSS filter or
+      platform-level color transformation.
+    domain: AccessibilityPreferences
+    id: colorFilter
+    label: Color Filter
+    one_of:
+      - pref:None
+      - pref:Grayscale
+      - pref:Inverted
+      - pref:GrayscaleInverted
+      - pref:Deuteranopia
+      - pref:Protanopia
+      - pref:Tritanopia
+
+  - comment: >-
+      Indicates whether the individual prefers a dark-mode (dark background,
+      light foreground) rendering. When set to <code>true</code>, applications
+      should apply their dark theme. This preference corresponds to the
+      <code>prefers-color-scheme: dark</code> CSS media feature.
+    domain: AccessibilityPreferences
+    id: darkMode
+    label: Dark Mode
+    range: xsd:boolean
+
+  - comment: >-
+      The preferred motion setting for the interface. Individuals with vestibular
+      disorders or motion sensitivity may prefer reduced motion. Acceptable
+      values are <code>NoPreference</code> and <code>ReducedMotion</code>.
+      This preference corresponds to the
+      <code>prefers-reduced-motion</code> CSS media feature.
+    domain: AccessibilityPreferences
+    id: motionPreference
+    label: Motion Preference
+    one_of:
+      - pref:NoPreference
+      - pref:ReducedMotion
+
+  - comment: >-
+      Links an <code>PreferencesCredential</code> record to its associated
+      <code>AccessibilityPreferences</code> block.
+    domain: PreferencesCredential
+    id: accessibilityPreferences
+    label: Accessibility Preferences
+    range: AccessibilityPreferences
+
+  - comment: >-
+      Links a <code>PreferencesCredential</code> to a block of verified contact
+      information, such as a verified email address, phone number, or mailing
+      address.
+    domain: PreferencesCredential
+    id: verifiedContactInfo
+    label: Verified Contact Info
+
+  - id: schema:identifier
+    domain: PreferencesCredential
+
+  - id: schema:name
+    domain:
+      - PreferencesCredential
+    label: Name
+
+  - id: schema:givenName
+    domain:
+      - PreferencesCredential
+    label: Given Name
+
+  - id: schema:familyName
+    domain:
+      - PreferencesCredential
+    label: Family Name
+
+  - id: schema:streetAddress
+    domain:
+      - schema:PostalAddress
+    label: Street Address
+
+  - id: schema:addressLocality
+    domain:
+      - schema:PostalAddress
+    label: Address Locality
+
+  - id: schema:addressRegion
+    domain:
+      - schema:PostalAddress
+    label: Address Region
+
+  - id: schema:addressCountry
+    domain:
+      - schema:PostalAddress
+    label: Address Country
+
+  - id: schema:postalCode
+    domain:
+      - schema:PostalAddress
+    label: Postal Code
+    range: xsd:string
+
+class:
+  - comment: >-
+      A Verifiable Credential containing an individual's self-asserted
+      preferences, including contact information and accessibility settings.
+      The individual themselves is the issuer (self-asserted credential). Relying
+      parties should treat the claims as self-asserted rather than
+      third-party-verified.
+    id: PreferencesCredential
+    label: Preferences Credential
+    example:
+      - label: >-
+          A basic example of the PreferencesCredential class expressed as
+          JSON-LD.
+        json: |-
+          {
+            "@context": [
+              "https://www.w3.org/ns/credentials/v2",
+              "https://w3id.org/preferences/v1"
+            ],
+            "type": ["VerifiableCredential", "PreferencesCredential"],
+            "issuer": "https://individual.example/",
+            "validFrom": "2025-05-01T00:00:00Z",
+            "credentialSubject": {
+              "name": "Jane Doe",
+              "email": "jane.doe@example.com",
+              "telephone": "+12125550101",
+              "address": {
+                "type": "PostalAddress",
+                "streetAddress": "123 Main St",
+                "addressLocality": "Springfield",
+                "addressRegion": "IL",
+                "postalCode": "62701",
+                "addressCountry": "US"
+              },
+              "accessibilityPreferences": {
+                "type": "AccessibilityPreferences",
+                "darkMode": true,
+                "fontSize": "18px",
+                "highContrast": false,
+                "colorFilter": "None",
+                "liveCaptions": false,
+                "motionPreference": "ReducedMotion"
+              }
+            }
+          }
+
+  - comment: >-
+      A set of accessibility settings that describe how an individual prefers to
+      interact with digital interfaces, including display, motion, caption, and
+      input preferences.
+    id: AccessibilityPreferences
+    label: Accessibility Preferences
+    example:
+      - label: >-
+          A basic example of the AccessibilityPreferences class expressed as
+          JSON-LD.
+        json: |-
+          {
+            "@context": "https://w3id.org/preferences/v1",
+            "type": "AccessibilityPreferences",
+            "liveCaptions": true,
+            "realTimeText": false,
+            "voiceControl": false,
+            "fontSize": "20px",
+            "fontFamily": "OpenDyslexic, sans-serif",
+            "highContrast": true,
+            "colorFilter": "None",
+            "darkMode": false,
+            "motionPreference": "ReducedMotion"
+          }
+
+  - comment: >-
+      A Verifiable Credential containing one or more preferences that have been
+      verified by a trusted third-party issuer. The issuer may attest a verified
+      email address, phone number, mailing address, accessibility preferences,
+      or any combination thereof. Relying parties may treat the enclosed claims
+      as third-party-verified rather than self-asserted.
+    id: VerifiedPreferencesCredential
+    label: Verified Preferences Credential
+    example:
+      - label: >-
+          A VerifiedPreferencesCredential with a verified email address.
+        json: |-
+          {
+            "@context": [
+              "https://www.w3.org/ns/credentials/v2",
+              "https://w3id.org/preferences/v1"
+            ],
+            "type": ["VerifiableCredential", "VerifiedPreferencesCredential"],
+            "issuer": "https://emailprovider.example/issuer",
+            "validFrom": "2025-03-15T10:22:00Z",
+            "credentialSubject": {
+              "email": "jane.doe@example.com"
+            }
+          }
+      - label: >-
+          A VerifiedPreferencesCredential with a verified phone number.
+        json: |-
+          {
+            "@context": [
+              "https://www.w3.org/ns/credentials/v2",
+              "https://w3id.org/preferences/v1"
+            ],
+            "type": ["VerifiableCredential", "VerifiedPreferencesCredential"],
+            "issuer": "https://carrier.example/issuer",
+            "validFrom": "2025-04-01T08:00:00Z",
+            "credentialSubject": {
+              "telephone": "+12125550101"
+            }
+          }
+      - label: >-
+          A VerifiedPreferencesCredential with a verified mailing address.
+        json: |-
+          {
+            "@context": [
+              "https://www.w3.org/ns/credentials/v2",
+              "https://w3id.org/preferences/v1"
+            ],
+            "type": ["VerifiableCredential", "VerifiedPreferencesCredential"],
+            "issuer": "https://postalauthority.example/issuer",
+            "validFrom": "2025-02-20T09:00:00Z",
+            "credentialSubject": {
+              "address": {
+                "type": "PostalAddress",
+                "streetAddress": "123 Main St",
+                "addressLocality": "Springfield",
+                "addressRegion": "IL",
+                "postalCode": "62701",
+                "addressCountry": "US"
+              }
+            }
+          }
+      - label: >-
+          A VerifiedPreferencesCredential with verified accessibility
+          preferences.
+        json: |-
+          {
+            "@context": [
+              "https://www.w3.org/ns/credentials/v2",
+              "https://w3id.org/preferences/v1"
+            ],
+            "type": ["VerifiableCredential", "VerifiedPreferencesCredential"],
+            "issuer": "https://atprovider.example/issuer",
+            "validFrom": "2025-05-01T00:00:00Z",
+            "credentialSubject": {
+              "accessibilityPreferences": {
+                "type": "AccessibilityPreferences",
+                "liveCaptions": true,
+                "realTimeText": false,
+                "voiceControl": true,
+                "fontSize": "20px",
+                "fontFamily": "OpenDyslexic, sans-serif",
+                "highContrast": true,
+                "colorFilter": "None",
+                "darkMode": true,
+                "motionPreference": "ReducedMotion"
+              }
+            }
+          }
+
+  - id: schema:PostalAddress
+    label: Postal Address
+
+individual:
+  - id: None
+    label: None
+    type: ColorFilter
+    comment: No color filter is applied to the display.
+
+  - id: Grayscale
+    label: Grayscale
+    type: ColorFilter
+    comment: >-
+      A grayscale filter is applied, removing all color from the display.
+      Useful for individuals with achromatopsia or those who find color
+      distracting.
+
+  - id: Inverted
+    label: Inverted
+    type: ColorFilter
+    comment: >-
+      Colors are fully inverted (a photographic negative effect). Can improve
+      readability for some individuals with photosensitivity when combined with
+      a dark environment.
+
+  - id: GrayscaleInverted
+    label: Grayscale Inverted
+    type: ColorFilter
+    comment: >-
+      A combination of grayscale and inversion, resulting in a white-on-black
+      display with no color. Commonly used by individuals with severe light
+      sensitivity.
+
+  - id: Deuteranopia
+    label: Deuteranopia
+    type: ColorFilter
+    comment: >-
+      A color correction filter for individuals with deuteranopia
+      (red-green color deficiency, green-weak type).
+
+  - id: Protanopia
+    label: Protanopia
+    type: ColorFilter
+    comment: >-
+      A color correction filter for individuals with protanopia
+      (red-green color deficiency, red-weak type).
+
+  - id: Tritanopia
+    label: Tritanopia
+    type: ColorFilter
+    comment: >-
+      A color correction filter for individuals with tritanopia
+      (blue-yellow color deficiency).
+
+  - id: NoPreference
+    label: No Preference
+    type: MotionPreference
+    comment: >-
+      The individual has no preference regarding motion; the application may
+      use animations and transitions freely.
+
+  - id: ReducedMotion
+    label: Reduced Motion
+    type: MotionPreference
+    comment: >-
+      The individual prefers reduced or eliminated motion in the interface.
+      Applications should minimize or remove non-essential animations and
+      parallax effects. Corresponds to the
+      <code>prefers-reduced-motion: reduce</code> CSS media feature value.
+
+  - comment: >-
+      An enumeration of color filter options that can be applied to a display
+      to assist individuals with color vision deficiencies or light sensitivity.
+    id: ColorFilter
+    label: Color Filter
+    example:
+      - label: Using the Grayscale color filter in an AccessibilityPreferences block.
+        json: |-
+          {
+            "@context": "https://w3id.org/preferences/v1",
+            "type": "AccessibilityPreferences",
+            "colorFilter": "Grayscale"
+          }
+
+  - comment: >-
+      An enumeration of motion preference options that indicate how much
+      animation and motion the individual finds acceptable in an interface.
+    id: MotionPreference
+    label: Motion Preference
+    example:
+      - label: Using the ReducedMotion preference in an AccessibilityPreferences block.
+        json: |-
+          {
+            "@context": "https://w3id.org/preferences/v1",
+            "type": "AccessibilityPreferences",
+            "motionPreference": "ReducedMotion"
+          }
