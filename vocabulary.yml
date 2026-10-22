@@ -74,7 +74,9 @@ property:
       (i.e., as a claim inside a <code>VerifiedPreferencesCredential</code>), the
       issuer attests that the address was confirmed to belong to the subject at
       the time of issuance.
-    domain: PreferencesCredential
+    domain:
+      - PreferencesCredential
+      - schema:ContactPoint
     id: schema:email
     label: Email Address
 
@@ -83,7 +85,9 @@ property:
       <code>+12125551234</code>). When used inside a
       <code>VerifiedPreferencesCredential</code>, the issuer attests that the number
       was confirmed to belong to the subject at the time of issuance.
-    domain: PreferencesCredential
+    domain:
+      - PreferencesCredential
+      - schema:ContactPoint
     id: schema:telephone
     label: Phone Number
 
@@ -425,6 +429,57 @@ class:
               }
             }
           }
+
+  - comment: >-
+      A Verifiable Credential in which a third-party issuer attests that the
+      subject controls a contact point, such as a phone number or an email
+      address. The subject is typed as a <code>ContactPoint</code> so that the
+      credential does not disclose whether the holder is a person or an
+      organization. Issuers are expected to set a short validity period.
+    id: PersonalPreferencesCredential
+    label: Personal Preferences Credential
+    example:
+      - label: >-
+          A PersonalPreferencesCredential with a verified phone number.
+        json: |-
+          {
+            "@context": [
+              "https://www.w3.org/ns/credentials/v2",
+              "https://w3id.org/preferences/v1rc1"
+            ],
+            "type": ["VerifiableCredential", "PersonalPreferencesCredential"],
+            "issuer": "https://carrier.example/issuer",
+            "validFrom": "2025-04-01T08:00:00Z",
+            "validUntil": "2025-04-01T08:15:00Z",
+            "credentialSubject": {
+              "type": "ContactPoint",
+              "telephone": "+15555550123"
+            }
+          }
+      - label: >-
+          A PersonalPreferencesCredential with a verified email address.
+        json: |-
+          {
+            "@context": [
+              "https://www.w3.org/ns/credentials/v2",
+              "https://w3id.org/preferences/v1rc1"
+            ],
+            "type": ["VerifiableCredential", "PersonalPreferencesCredential"],
+            "issuer": "https://emailprovider.example/issuer",
+            "validFrom": "2025-03-15T10:22:00Z",
+            "validUntil": "2025-03-15T10:37:00Z",
+            "credentialSubject": {
+              "type": "ContactPoint",
+              "email": "jane.doe@example.com"
+            }
+          }
+
+  - comment: >-
+      A means of contacting the subject, such as a phone number or an email
+      address, without stating whether the subject is a person or an
+      organization.
+    id: schema:ContactPoint
+    label: Contact Point
 
   - id: schema:PostalAddress
     label: Postal Address
